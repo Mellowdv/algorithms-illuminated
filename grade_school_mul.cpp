@@ -15,10 +15,23 @@ int main() {
 
 	std::string x, y;
 	std::cin >> x >> y;
+	bool is_negative = true;
+	if (x[0] == '-' && y[0] == '-') {
+		is_negative = false;
+		x = x.substr(1, x.size());
+		y = y.substr(1, y.size());
+	} else if (x[0] == '-') {
+		x = x.substr(1, x.size());
+	} else if (y[0] == '-') {
+		y = y.substr(1, y.size());
+	} else {
+		is_negative = false;
+	}
 	if (x.size() < y.size()) {
 		std::swap(x, y);
 	}
 	std::cout << x << " x " << y << "\n";
+
 
 	// Build partial sums
 	// Both partial sums building and adding is done in reverse, it's just easier
@@ -80,5 +93,5 @@ int main() {
 	}
 	std::reverse(final_sum.begin(), final_sum.begin() + final_sum_index);
 	for (int64_t i = 0; i < final_sum_index; i++) final_sum[i] += '0';
-	std::cout << std::string {final_sum.begin(), final_sum.begin() + final_sum_index} << "\n";
+	std::cout << (is_negative ? "-" : "") << std::string {final_sum.begin(), final_sum.begin() + final_sum_index} << "\n";
 }
